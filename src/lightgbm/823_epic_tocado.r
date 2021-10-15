@@ -33,8 +33,8 @@ require("mlrMBO")
 #para poder usarlo en la PC y en la nube sin tener que cambiar la ruta
 #cambiar aqui las rutas en su maquina
 switch ( Sys.info()[['sysname']],
-         Windows = { directory.root  <-  "M:\\" },   #Windows
-         Darwin  = { directory.root  <-  "~/dm/" },  #Apple MAC
+         #Windows = { directory.root  <-  "M:\\" },   #Windows
+         #Darwin  = { directory.root  <-  "~/dm/" },  #Apple MAC
          Linux   = { directory.root  <-  "~/buckets/b1/" } #Google Cloud
        )
 #defino la carpeta donde trabajo
@@ -61,19 +61,22 @@ kgen_mes_hasta    <- 202009  #Obviamente, solo puedo entrenar hasta 202011
 kgen_mes_desde    <- 202009
 
 
-kBO_iter    <-  150   #cantidad de iteraciones de la Optimizacion Bayesiana
+kBO_iter    <-  300   #cantidad de iteraciones de la Optimizacion Bayesiana
 
 #Aqui se cargan los hiperparametros
 hs <- makeParamSet( 
          makeNumericParam("learning_rate",    lower=    0.02 , upper=    0.1),
          makeNumericParam("feature_fraction", lower=    0.1  , upper=    1.0),
-         makeIntegerParam("min_data_in_leaf", lower=  100L   , upper= 8000L),
-         makeIntegerParam("num_leaves",       lower=    8L   , upper= 1024L)
+         makeIntegerParam("min_data_in_leaf", lower=  10L   , upper= 100L),
+         makeIntegerParam("num_leaves",       lower=    8L   , upper= 45L)
+         makeNumericParam("lambda_l1",lower=0, upper=100),
+         makeNumericParam("lambda_l1",lower=0, upper=200),       
+         
         )
 
 campos_malos  <- c()   #aqui se deben cargar todos los campos culpables del Data Drifting
 
-ksemilla_azar  <- 102191  #Aqui poner la propia semilla
+ksemilla_azar  <- 891763  #Aqui poner la propia semilla
 #------------------------------------------------------------------------------
 #Funcion que lleva el registro de los experimentos
 
